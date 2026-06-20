@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Eye Care Camp & Vision Screening Drive - October 2024",
+    "date": "October 2024",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club of Visnagar organized a comprehensive eye care camp to address vision problems among the underprivileged sections of our community. Our trained ophthalmologists conducted free eye examinations for over 200 individuals, identifying common vision defects and eye diseases. We provided subsidized prescription glasses to 150+ people who needed them, ensuring they could see clearly and participate fully in their daily activities. This initiative focused on making quality eye care accessible to everyone, regardless of their financial capacity.",
+    "imageUrl": "/eye.jpeg"
+  },
+  {
+    "title": "Dental Health Camp & Oral Hygiene Awareness - February 2025",
+    "date": "February 2025",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club of Visnagar conducted a dedicated dental health camp to promote oral hygiene and prevent dental diseases in our community. Professional dentists provided free dental checkups, teeth cleaning, and basic treatments to more than 180 people. We distributed oral hygiene kits containing toothbrushes, toothpaste, and educational pamphlets about proper dental care. Children and adults alike learned about the importance of regular dental checkups and maintaining healthy teeth through interactive awareness sessions. This camp demonstrated our commitment to preventive healthcare.",
+    "imageUrl": "/dental.jpeg"
+  },
+  {
+    "title": "Health Awareness & General Medical Camp - August 2024",
+    "date": "August 2024",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club of Visnagar organized a comprehensive health awareness and general medical camp to promote wellness and early disease detection in our community. Qualified medical professionals conducted free health checkups including blood pressure monitoring, blood sugar testing, and general health consultations. Over 250 participants received personalized health advice and awareness about common health issues like diabetes, hypertension, and lifestyle diseases. We distributed free medicines to those in need and referred complicated cases to specialized hospitals. This camp reinforced our commitment to making quality healthcare accessible to all.",
+    "imageUrl": "/health.png"
+  },
+  {
+    "title": "Blood Donation Camp - June 2024",
+    "date": "June 2024",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club of Visnagar organized a successful blood donation camp to support the critical need for blood supply in our community. This camp brought together dedicated donors and volunteers who contributed to save countless lives. As part of our commitment to community health and wellness, we conduct blood donation camps at least once every year to ensure a steady supply of safe blood for those in need.",
+    "imageUrl": "/blood_donation.png"
+  },
+  {
+    "title": "Blood Donation Camp - March 2025",
+    "date": "March 2025",
+    "location": "Visnagar, Gujarat",
+    "description": "Continuing our mission of community health, Rotary Club of Visnagar held another successful blood donation camp in March 2025. This annual initiative demonstrates our commitment to supporting healthcare needs and helping those who depend on blood transfusions. Through these regular camps, we maintain a strong partnership with medical institutions and ensure that life-saving blood is always available when needed most.",
+    "imageUrl": "/blood-donation.png"
+  },
+  {
+    "title": "Visnagar Marathon 2025 - Cervical Cancer Awareness",
+    "date": "December 28, 2025",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club of Visnagar organized the Visnagar Marathon 2025 dedicated to raising awareness about cervical cancer and encouraging early screening among women. This marathon brought together the community to promote fitness, women's health education, and social responsibility. With categories for women of all ages and men in different age groups (till 30 years, 31-45 years, and above 46 years), the event united our community in a meaningful cause. Every step taken supported life-saving health education and awareness initiatives.",
+    "imageUrl": "/marathon.jpg"
+  },
+  {
+    "title": "COVID-19 Lockdown Relief - Food Distribution",
+    "date": "2023",
+    "location": "Visnagar Taluka, Gujarat",
+    "description": "During the COVID-19 pandemic lockdown, Rotary Club Visnagar stepped forward to help poor and needy people in Visnagar Taluka who were unable to earn their daily income due to lockdown restrictions. Our Rotarians contributed essential groceries including grains, oil, masala, salt, and other necessary materials to prepare comprehensive Anndaan kits. We distributed more than 300 food grain kits to poor and needy people, ensuring they had access to basic necessities during this challenging period.",
+    "imageUrl": "/covid.jpeg"
+  },
+  {
+    "title": "Senior Citizens Care & Community Support",
+    "date": "2023",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club Visnagar shelters and cares for more than 50 senior citizens in our community. Beyond providing shelter, we ensure comprehensive support for their health issues, educational needs, and daily well-being. Our dedicated team helps seniors with daily activities, motivates them to maintain personal hygiene, and provides them with nutritious food and necessary medical treatment. This initiative reflects our commitment to ensuring dignified living and quality care for our elderly community members.",
+    "imageUrl": "/senior.png"
+  },
+  {
+    "title": "Tree Plantation Drive & Environmental Awareness - July 2024",
+    "date": "2025",
+    "location": "Visnagar, Gujarat",
+    "description": "Rotary Club Visnagar had taken intiative to grow trees during monsoon season.",
+    "imageUrl": "/trees.png"
+  }
+]
