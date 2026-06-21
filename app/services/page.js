@@ -5,7 +5,7 @@ const services = [
     title: 'Digital X-Ray Services',
     description: 'Subsidized quick and accurate bone/chest imaging.',
     image:
-      '/xray.png',
+      '/xray.jpeg',
   },
   {
     title: 'Erba EM 200',
