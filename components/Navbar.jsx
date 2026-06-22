@@ -9,6 +9,7 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Our Services', href: '/services' },
   { label: 'Past Events', href: '/past-events' },
+  { label: 'Contact Us', href: '/contact' },
 ];
 
 export default function Navbar() {

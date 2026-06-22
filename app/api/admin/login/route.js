@@ -22,7 +22,7 @@ export async function POST(request) {
 
     // 1. First, check if matches environment variables (fallback/superuser admin)
     const allowedEmail = normalizeEmail(process.env.ADMIN_LOGIN_EMAIL);
-    const allowedPassword = String(process.env.ADMIN_LOGIN_PASSWORD || '');
+    const allowedPassword = String(process.env.ADMIN_LOGIN_PASSWORD || '').trim();
 
     let isAuthed = false;
 
