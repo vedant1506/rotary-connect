@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import dbConnect from '../../../../lib/mongodb';
 import Story from '../../../../models/Story';
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/stories/all — returns ALL stories for admin (both pending and approved)
 export async function GET() {
   try {

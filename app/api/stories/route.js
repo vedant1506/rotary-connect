@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import dbConnect from '../../../lib/mongodb';
 import Story from '../../../models/Story';
 
+export const dynamic = 'force-dynamic';
+
 // GET — return all approved stories (public feed)
 export async function GET() {
   try {
