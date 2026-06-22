@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Navbar from '../../../components/Navbar';
 
 export default function AdminLoginPage() {
@@ -59,7 +60,7 @@ export default function AdminLoginPage() {
             Sign in to the dashboard
           </h1>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            Use this screen to access volunteer records, certificates, and event operations.
+            Sign in as an admin or approved volunteer to access records, certificates, and event operations.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -99,6 +100,13 @@ export default function AdminLoginPage() {
             >
               Continue to Dashboard
             </button>
+
+            <p className="text-center text-sm text-slate-500">
+              New here?{' '}
+              <Link href="/admin/register" className="font-semibold text-[#f7a81b] hover:underline">
+                Create an account
+              </Link>
+            </p>
           </form>
         </section>
       </main>
