@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
 
       <main className="mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <section className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/60">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#f7a81b]">
             Admin Access
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                 autoComplete="username"
                 value={formData.email}
                 onChange={(event) => setFormData((current) => ({ ...current, email: event.target.value }))}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:bg-white"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white"
                 placeholder="admin@example.com"
               />
             </label>
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
                 autoComplete="current-password"
                 value={formData.password}
                 onChange={(event) => setFormData((current) => ({ ...current, password: event.target.value }))}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:bg-white"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white"
                 placeholder="••••••••"
               />
             </label>
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
 
             <button
               type="submit"
-              className="w-full rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+              className="w-full rounded-full bg-[#f7a81b] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
             >
               Continue to Dashboard
             </button>

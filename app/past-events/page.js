@@ -18,7 +18,7 @@ export default function PastEventsPage() {
 
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mb-12">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">Our Impact</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#f7a81b]">Our Impact</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
             Past Events & Initiatives
           </h1>
@@ -34,7 +34,7 @@ export default function PastEventsPage() {
         ) : (
           <>
             <div className="mb-6 flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 w-fit border border-emerald-200">
-              <span className="h-2 w-2 rounded-full bg-emerald-600" />
+              <span className="h-2 w-2 rounded-full bg-[#f7a81b]" />
               <p className="text-sm font-medium text-emerald-800">{events.length} events showcased</p>
             </div>
 

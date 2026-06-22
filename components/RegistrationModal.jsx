@@ -90,7 +90,7 @@ export default function RegistrationModal({ open, event, onClose }) {
       <div className="relative w-full max-w-lg overflow-hidden rounded-t-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/20 sm:rounded-3xl">
         <div className="flex items-start justify-between gap-4 border-b border-slate-200 px-4 py-4 sm:px-6 sm:py-5">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#f7a81b]">
               Volunteer Registration
             </p>
             <h2 className="mt-1 text-lg font-semibold text-slate-950 sm:text-xl">Register for {selectedEventTitle}</h2>
@@ -201,7 +201,7 @@ export default function RegistrationModal({ open, event, onClose }) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="rounded-full bg-[#f7a81b] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {isSubmitting ? 'Submitting...' : 'Submit Registration'}
             </button>

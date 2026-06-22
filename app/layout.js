@@ -1,10 +1,10 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Rotary Connect',
+  title: 'ROTARY CLUB VISNAGAR',
   description: 'Community health and volunteering portal for Rotary Connect',
   icons: {
-    icon: '/rotary-logo.png',
+    icon: '/logo.jpeg',
   },
 };
 

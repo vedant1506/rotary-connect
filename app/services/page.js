@@ -22,12 +22,12 @@ const services = [
   },
   {
     title: 'Snibe MAGLUMI 600',
-    description: 'A fully automated chemiluminescence immunoassay analyzer used to detect specialized biomarkers like hormones, thyroid levels, tumor markers, and infectious diseases..',
+    description: 'A fully automated chemiluminescence immunoassay analyzer used to detect specialized biomarkers like hormones, thyroid levels, tumor markers, and infectious diseases.',
     image:
       '/machine 2.png',
   },
   {
-    title: 'Erba H560.',
+    title: 'Erba H560',
     description: 'A fully automated, 5-part differential hematology analyzer used primarily to perform Complete Blood Count (CBC) tests by counting and identifying different types of blood cells.',
     image:
       '/machine 3.png',
@@ -41,7 +41,7 @@ export default function ServicesPage() {
 
       <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <section className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#f7a81b]">
             Our Services
           </p>
           
@@ -66,9 +66,7 @@ export default function ServicesPage() {
               <div className="space-y-4 p-5 sm:p-6">
                 <h2 className="text-xl font-semibold text-slate-950 sm:text-2xl">{service.title}</h2>
                 <p className="text-sm leading-7 text-slate-600">{service.description}</p>
-                <div className="inline-flex rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
-                  Affordable and community-focused
-                </div>
+                
               </div>
             </article>
           ))}

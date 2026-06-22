@@ -14,7 +14,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-3">
           <Image 
@@ -25,10 +25,10 @@ export default function Navbar() {
             className="h-11 w-11 rounded-2xl object-contain transition-transform duration-200 group-hover:scale-105"
           />
           <div className="leading-tight">
-            <p className="text-sm font-semibold tracking-[0.18em] text-emerald-700 uppercase">
-              Rotary Connect
+            <p className="text-sm font-semibold tracking-[0.18em] text-[#f7a81b] uppercase">
+              Rotary Club Visnagar
             </p>
-            <p className="text-xs text-slate-500">Community health network</p>
+            <p className="text-xs text-slate-700">Community health network</p>
           </div>
         </Link>
 

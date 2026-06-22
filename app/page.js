@@ -80,22 +80,22 @@ export default function HomePage() {
 
       <main>
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_32%),radial-gradient(circle_at_right,_rgba(14,165,233,0.14),_transparent_28%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_32%),radial-gradient(circle_at_right,_rgba(14,165,233,0.14),_transparent_5%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]" />
           <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-28">
             <div className="max-w-2xl">
-              <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1 text-sm font-medium text-emerald-700">
-                Rotary Connect Community Portal
+              <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1 text-sm font-medium text-[#f7a81b]">
+                ROTARY CLUB VISNAGAR
               </span>
               <h1 className="mt-6 text-3xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
                 Make a Difference for families who need care the most.
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Support affordable health drives, connect volunteers with live events, and help us deliver fast medical access to underserved communities.
+                Support affordable health drives, connect volunteers with live events, and help us deliver fast medical access to families in Visnagar and surrounding villages.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/services"
-                  className="inline-flex w-full items-center justify-center rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-emerald-700 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-full bg-[#f7a81b] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-emerald-700 sm:w-auto"
                 >
                   Explore Services
                 </Link>
@@ -115,15 +115,15 @@ export default function HomePage() {
                   {stats.map((stat) => (
                     <div key={stat} className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4 text-base">
                       <span>{stat}</span>
-                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#f7a81b]" />
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="rounded-3xl border border-emerald-100 bg-emerald-600 p-6 text-white shadow-xl shadow-emerald-600/20">
-                <p className="text-sm font-medium text-emerald-100">Volunteer-first model</p>
+              <div className="rounded-3xl border border-emerald-100 bg-[#f7a81b] p-6 text-black shadow-emerald-600/20">
+                <p className="text-sm font-medium text-black">Volunteer-first model</p>
                 <h2 className="mt-4 text-2xl font-semibold">Quick response. Transparent support. Real community impact.</h2>
-                <p className="mt-3 text-sm leading-7 text-emerald-50/90">
+                <p className="mt-3 text-sm leading-7 text-black">
                   Every drive is designed to make participation simple for residents and volunteers alike.
                 </p>
               </div>
@@ -131,20 +131,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="border-y border-slate-200 bg-white px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3 text-sm font-semibold text-slate-700">
-            <span className="rounded-full bg-slate-100 px-4 py-2">150+ Volunteers</span>
-            <span className="hidden text-slate-300 sm:inline">|</span>
-            <span className="rounded-full bg-slate-100 px-4 py-2">24 Drives</span>
-            <span className="hidden text-slate-300 sm:inline">|</span>
-            <span className="rounded-full bg-slate-100 px-4 py-2">Affordable Care</span>
-          </div>
-        </section>
+ 
 
         <section id="upcoming-drives" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#f7a81b]">
                 Upcoming Drives
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -152,7 +144,7 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-slate-600 sm:text-right">
-              Browse live drive listings fetched from the backend and volunteer where your time can have the biggest impact.
+              Join the next event near you.
             </p>
           </div>
 
@@ -194,14 +186,14 @@ export default function HomePage() {
                         {event.description || 'Community health support drive.'}
                       </p>
                       <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-                        <span className="text-sm font-medium text-emerald-700">Open for volunteers</span>
+                        <span className="text-sm font-medium text-black">Open for volunteers</span>
                         <button
                           type="button"
                           onClick={() => {
                             setSelectedEvent(event);
                             setIsRegistrationOpen(true);
                           }}
-                          className="inline-flex w-full items-center justify-center rounded-full bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 sm:w-auto"
+                          className="inline-flex w-full items-center justify-center rounded-full bg-[#f7a81b] px-4 py-2.5 text-sm font-semibold text-black transition-colors duration-200 hover:bg-emerald-700 sm:w-auto"
                         >
                           Volunteer Now
                         </button>
