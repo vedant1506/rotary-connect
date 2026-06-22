@@ -8,7 +8,7 @@ import StatsCounter from '../components/StatsCounter';
 import Testimonials from '../components/Testimonials';
 
 /* ── Constants ─────────────────────────────────────────────── */
-const stats = ['150+ Volunteers', '24 Drives', 'Affordable Care'];
+const stats = ['120+ Active Volunteers', '32+ Drives Completed', 'Affordable Care'];
 const AGE_OPTIONS = ['Under 18', '18–25', '25–35', '35–50', '50+'];
 const BLOOD_OPTIONS = ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'];
 const SERVICE_OPTIONS = ['Blood Test', 'General Checkup', 'X-Ray', 'BP Check', 'Sugar Test', 'Eye Test'];
@@ -429,9 +429,9 @@ export default function HomePage() {
               <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">{error}</div>
             ) : (
               /* items-stretch: all cards in a row get the same height */
-              <div className="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid items-stretch gap-6 md:grid-cols-2">
                 {allEvents.map(ev => (
-                  <EventFlipCard key={ev._id} event={ev} image={ev.image || '/hall.jpeg'} />
+                  <EventFlipCard key={ev._id} event={ev} image={ev.imageUrl || ev.image || '/hall.jpeg'} />
                 ))}
               </div>
             )}
