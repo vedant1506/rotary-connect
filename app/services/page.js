@@ -1,4 +1,5 @@
 import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const services = [
   {
@@ -31,6 +32,11 @@ const services = [
     description: 'A fully automated, 5-part differential hematology analyzer used primarily to perform Complete Blood Count (CBC) tests by counting and identifying different types of blood cells.',
     image:
       '/machine 3.png',
+  },
+  {
+    title: 'Medicines at Lowest Cost',
+    description: 'Providing essential and discounted medicines to the community directly from our medical store.',
+    image: '/medicines.jpeg',
   },
 ];
 
@@ -72,6 +78,7 @@ export default function ServicesPage() {
           ))}
         </section>
       </main>
+      <Footer />
     </div>
   );
 }
