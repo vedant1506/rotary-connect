@@ -15,6 +15,16 @@ export default function AdminDashboardPage() {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('volunteers');
 
+  // Events management state
+  const [events, setEvents] = useState([]);
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null); // event object being edited
+  const [editForm, setEditForm] = useState({ title: '', date: '', location: '', description: '' });
+  const [editSubmitting, setEditSubmitting] = useState(false);
+  const [editFeedback, setEditFeedback] = useState({ type: '', message: '' });
+  const [deletingEventId, setDeletingEventId] = useState(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null); // shows inline confirm UI
+
   // Create event form state
   const [eventForm, setEventForm] = useState({ title: '', date: '', location: '', description: '' });
   const [eventSubmitting, setEventSubmitting] = useState(false);
@@ -64,8 +74,78 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     if (activeTab === 'stories') loadStories();
     if (activeTab === 'team') loadAdminUsers();
+    if (activeTab === 'manage-events') loadEvents();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
+
+  async function loadEvents() {
+    setEventsLoading(true);
+    try {
+      const res = await fetch('/api/events');
+      const result = await res.json();
+      setEvents(Array.isArray(result?.data) ? result.data : []);
+    } catch {
+      setEvents([]);
+    } finally {
+      setEventsLoading(false);
+    }
+  }
+
+  function openEditModal(event) {
+    setEditingEvent(event);
+    const dateStr = event.date ? new Date(event.date).toISOString().split('T')[0] : '';
+    setEditForm({
+      title: event.title || '',
+      date: dateStr,
+      location: event.location || '',
+      description: event.description || '',
+    });
+    setEditFeedback({ type: '', message: '' });
+  }
+
+  function closeEditModal() {
+    setEditingEvent(null);
+    setEditForm({ title: '', date: '', location: '', description: '' });
+    setEditFeedback({ type: '', message: '' });
+  }
+
+  async function handleUpdateEvent(e) {
+    e.preventDefault();
+    if (!editingEvent) return;
+    setEditSubmitting(true);
+    setEditFeedback({ type: '', message: '' });
+    try {
+      const res = await fetch(`/api/events/${editingEvent._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result?.message || 'Failed to update event');
+      setEditFeedback({ type: 'success', message: '✅ Event updated successfully!' });
+      loadEvents();
+      setTimeout(() => closeEditModal(), 1200);
+    } catch (err) {
+      setEditFeedback({ type: 'error', message: err instanceof Error ? err.message : 'Failed to update event' });
+    } finally {
+      setEditSubmitting(false);
+    }
+  }
+
+  async function handleDeleteEvent(id) {
+    setDeletingEventId(String(id));
+    setConfirmDeleteId(null);
+    try {
+      const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to delete event');
+      loadEvents();
+    } catch (err) {
+      console.error(err);
+      alert(err instanceof Error ? err.message : 'Failed to delete event');
+    } finally {
+      setDeletingEventId(null);
+    }
+  }
 
   async function loadAdminUsers() {
     setAdminUsersLoading(true);
@@ -125,8 +205,10 @@ export default function AdminDashboardPage() {
       });
       const result = await res.json();
       if (!res.ok) throw new Error(result?.message || 'Failed to create event');
-      setEventFeedback({ type: 'success', message: `✅ Event "${eventForm.title}" created successfully!` });
+      setEventFeedback({ type: 'success', message: `✅ Event "${eventForm.title}" created successfully! Redirecting to event list…` });
       setEventForm({ title: '', date: '', location: '', description: '' });
+      await loadEvents();
+      setTimeout(() => setActiveTab('manage-events'), 1500);
     } catch (err) {
       setEventFeedback({ type: 'error', message: err instanceof Error ? err.message : 'Failed to create event' });
     } finally {
@@ -140,6 +222,7 @@ export default function AdminDashboardPage() {
   const tabs = [
     { id: 'volunteers', label: 'Volunteers', count: volunteers.length },
     { id: 'participants', label: 'Patients', count: participants.length },
+    { id: 'manage-events', label: 'Manage Events', count: events.length },
     { id: 'create-event', label: 'Create Event', count: null },
     { id: 'stories', label: 'Stories', count: pendingCount, countAlert: true },
     { id: 'team', label: 'Team Members', count: pendingUsersCount, countAlert: true },
@@ -194,6 +277,224 @@ export default function AdminDashboardPage() {
             </button>
           ))}
         </div>
+
+        {/* ── MANAGE EVENTS TAB ── */}
+        {activeTab === 'manage-events' && (
+          <div>
+            {/* Edit Modal Overlay */}
+            {editingEvent && (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4"
+                onClick={(e) => { if (e.target === e.currentTarget) closeEditModal(); }}
+              >
+                <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8">
+                  <div className="mb-5 flex items-center justify-between">
+                    <h2 className="text-lg font-semibold text-slate-950">✏️ Edit Event</h2>
+                    <button
+                      type="button"
+                      onClick={closeEditModal}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleUpdateEvent} className="space-y-4">
+                    <label className="block space-y-1.5">
+                      <span className="text-sm font-medium text-slate-700">Event Title <span className="text-red-500">*</span></span>
+                      <input
+                        type="text"
+                        required
+                        value={editForm.title}
+                        onChange={(e) => setEditForm((f) => ({ ...f, title: e.target.value }))}
+                        className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white focus:ring-2 focus:ring-[#f7a81b]/20"
+                      />
+                    </label>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label className="block space-y-1.5">
+                        <span className="text-sm font-medium text-slate-700">Date <span className="text-red-500">*</span></span>
+                        <input
+                          type="date"
+                          required
+                          value={editForm.date}
+                          onChange={(e) => setEditForm((f) => ({ ...f, date: e.target.value }))}
+                          className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white focus:ring-2 focus:ring-[#f7a81b]/20"
+                        />
+                      </label>
+                      <label className="block space-y-1.5">
+                        <span className="text-sm font-medium text-slate-700">Location <span className="text-red-500">*</span></span>
+                        <input
+                          type="text"
+                          required
+                          value={editForm.location}
+                          onChange={(e) => setEditForm((f) => ({ ...f, location: e.target.value }))}
+                          className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white focus:ring-2 focus:ring-[#f7a81b]/20"
+                        />
+                      </label>
+                    </div>
+
+                    <label className="block space-y-1.5">
+                      <span className="text-sm font-medium text-slate-700">Description</span>
+                      <textarea
+                        rows={4}
+                        value={editForm.description}
+                        onChange={(e) => setEditForm((f) => ({ ...f, description: e.target.value }))}
+                        className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#f7a81b] focus:bg-white focus:ring-2 focus:ring-[#f7a81b]/20"
+                      />
+                    </label>
+
+                    {editFeedback.message && (
+                      <div className={`rounded-2xl px-4 py-3 text-sm ${
+                        editFeedback.type === 'success'
+                          ? 'border border-emerald-200 bg-emerald-50 text-emerald-800'
+                          : 'border border-red-200 bg-red-50 text-red-700'
+                      }`}>
+                        {editFeedback.message}
+                      </div>
+                    )}
+
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={closeEditModal}
+                        className="flex-1 rounded-2xl border border-slate-200 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={editSubmitting}
+                        className="flex-1 rounded-2xl bg-[#f7a81b] py-3 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
+                      >
+                        {editSubmitting ? 'Saving…' : '💾 Save Changes'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {/* Header row */}
+            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm text-slate-500">
+                  All published events — upcoming and past. <strong className="text-slate-800">Edit</strong> or <strong className="text-slate-800">Delete</strong> any event.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveTab('create-event')}
+                className="inline-flex items-center gap-2 rounded-full bg-[#f7a81b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
+              >
+                + Create New Event
+              </button>
+            </div>
+
+            {eventsLoading ? (
+              <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+                Loading events…
+              </div>
+            ) : events.length === 0 ? (
+              <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center">
+                <p className="text-4xl mb-3">🗓️</p>
+                <p className="font-semibold text-slate-700">No events found</p>
+                <p className="text-sm text-slate-400 mt-1">Create your first event using the button above.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {events.map((ev) => {
+                  const eventDate = ev.date ? new Date(ev.date) : null;
+                  const isUpcoming = eventDate && eventDate >= new Date(new Date().setHours(0,0,0,0));
+                  const eventId = String(ev._id);
+                  const isDeleting = deletingEventId === eventId;
+                  const isConfirming = confirmDeleteId === eventId;
+                  return (
+                    <article
+                      key={ev._id}
+                      className={`relative flex flex-col rounded-3xl border bg-white shadow-sm transition ${
+                        isUpcoming ? 'border-emerald-200' : 'border-slate-200'
+                      } ${isDeleting ? 'opacity-50' : ''}`}
+                    >
+                      {/* Status badge */}
+                      <div className="flex items-center justify-between px-5 pt-5">
+                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                          isUpcoming
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          {isUpcoming ? '🟢 Upcoming' : '⏹ Past'}
+                        </span>
+                        <span className="text-xs text-slate-400">
+                          {eventDate
+                            ? eventDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                            : '—'}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 px-5 py-4">
+                        <h3 className="font-semibold text-slate-950 leading-snug">{ev.title}</h3>
+                        <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
+                          <span>📍</span> {ev.location}
+                        </p>
+                        {ev.description && (
+                          <p className="mt-3 line-clamp-3 text-sm text-slate-600 leading-relaxed">{ev.description}</p>
+                        )}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex gap-2 px-5 pb-5">
+                        {isConfirming ? (
+                          /* Inline confirm UI — no browser dialog needed */
+                          <>
+                            <div className="flex-1 rounded-2xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 text-center font-medium">
+                              Delete this event?
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteEvent(ev._id)}
+                              disabled={isDeleting}
+                              className="rounded-2xl border border-red-400 bg-red-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-600 disabled:opacity-50"
+                            >
+                              {isDeleting ? '⏳' : 'Yes, Delete'}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDeleteId(null)}
+                              className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-100"
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => openEditModal(ev)}
+                              disabled={isDeleting}
+                              className="flex-1 rounded-2xl border border-[#f7a81b]/40 bg-[#f7a81b]/10 py-2.5 text-xs font-semibold text-[#f7a81b] transition hover:bg-[#f7a81b]/20 disabled:opacity-50"
+                            >
+                              ✏️ Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDeleteId(eventId)}
+                              disabled={isDeleting}
+                              className="flex-1 rounded-2xl border border-red-100 bg-red-50 py-2.5 text-xs font-semibold text-red-600 transition hover:bg-red-100 disabled:opacity-50"
+                            >
+                              🗑 Delete
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* ── CREATE EVENT TAB ── */}
         {activeTab === 'create-event' && (

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -15,7 +15,9 @@ const navItems = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   /* Detect scroll to intensify the glass blur on scroll */
   useEffect(() => {
@@ -28,6 +30,23 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  /* Check admin auth status on every navigation */
+  useEffect(() => {
+    fetch('/api/admin/check')
+      .then((r) => r.json())
+      .then((data) => setIsAdmin(data.authenticated === true))
+      .catch(() => setIsAdmin(false));
+  }, [pathname]);
+
+  async function handleLogout() {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch { /* ignore */ }
+    setIsAdmin(false);
+    router.push('/');
+    router.refresh();
+  }
 
   return (
     <>
@@ -93,19 +112,37 @@ export default function Navbar() {
               );
             })}
 
-            {/* Admin CTA */}
-            <Link
-              href="/admin/login"
-              className={`
-                ml-2 rounded-full px-5 py-2 text-sm font-semibold
-                border transition-all duration-200
-                ${pathname === '/admin/login'
-                  ? 'border-[#f7a81b] bg-[#f7a81b] text-white shadow-md shadow-[#f7a81b]/30'
-                  : 'border-slate-300 bg-white/70 text-slate-700 hover:border-[#f7a81b] hover:bg-[#f7a81b] hover:text-white hover:shadow-md hover:shadow-[#f7a81b]/25'}
-              `}
-            >
-              Admin Login
-            </Link>
+            {/* Admin CTA — shows Dashboard+Logout if logged in, otherwise Admin Login */}
+            {isAdmin ? (
+              <div className="ml-2 flex items-center gap-2">
+                <Link
+                  href="/admin/dashboard"
+                  className="rounded-full border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700 transition-all duration-200 hover:bg-emerald-100"
+                >
+                  🛡 Dashboard
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-600 transition-all duration-200 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/admin/login"
+                className={`
+                  ml-2 rounded-full px-5 py-2 text-sm font-semibold
+                  border transition-all duration-200
+                  ${pathname === '/admin/login'
+                    ? 'border-[#f7a81b] bg-[#f7a81b] text-white shadow-md shadow-[#f7a81b]/30'
+                    : 'border-slate-300 bg-white/70 text-slate-700 hover:border-[#f7a81b] hover:bg-[#f7a81b] hover:text-white hover:shadow-md hover:shadow-[#f7a81b]/25'}
+                `}
+              >
+                Admin Login
+              </Link>
+            )}
           </nav>
 
           {/* ── Mobile Hamburger ── */}
@@ -173,18 +210,38 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <Link
-                href="/admin/login"
-                onClick={() => setMenuOpen(false)}
-                className={`
-                  mt-1 rounded-2xl border px-4 py-3 text-sm font-semibold transition-all duration-200
-                  ${pathname === '/admin/login'
-                    ? 'border-[#f7a81b] bg-[#f7a81b] text-white'
-                    : 'border-[#f7a81b]/40 bg-[#f7a81b]/8 text-[#f7a81b] hover:bg-[#f7a81b] hover:text-white'}
-                `}
-              >
-                Admin Login
-              </Link>
+
+              {isAdmin ? (
+                <>
+                  <Link
+                    href="/admin/dashboard"
+                    onClick={() => setMenuOpen(false)}
+                    className="mt-1 rounded-2xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 transition-all duration-200 hover:bg-emerald-100"
+                  >
+                    🛡 Dashboard
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => { setMenuOpen(false); handleLogout(); }}
+                    className="mt-1 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-left text-sm font-semibold text-red-600 transition-all duration-200 hover:bg-red-100"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/admin/login"
+                  onClick={() => setMenuOpen(false)}
+                  className={`
+                    mt-1 rounded-2xl border px-4 py-3 text-sm font-semibold transition-all duration-200
+                    ${pathname === '/admin/login'
+                      ? 'border-[#f7a81b] bg-[#f7a81b] text-white'
+                      : 'border-[#f7a81b]/40 bg-[#f7a81b]/8 text-[#f7a81b] hover:bg-[#f7a81b] hover:text-white'}
+                  `}
+                >
+                  Admin Login
+                </Link>
+              )}
             </nav>
           </div>
         )}
