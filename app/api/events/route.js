@@ -12,10 +12,11 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: events }, { status: 200 });
   } catch (error) {
+    console.error('GET /api/events failed:', error);
     return NextResponse.json(
       {
         success: false,
-        message: 'Failed to fetch events',
+        message: 'Failed to fetch events. If this is on Vercel, check MONGO_URI env var and Atlas Network Access.',
         error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }

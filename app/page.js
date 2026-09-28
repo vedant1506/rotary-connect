@@ -425,15 +425,21 @@ export default function HomePage() {
           <div className="mt-10">
             {loading ? (
               <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">Loading upcoming drives...</div>
-            ) : error ? (
-              <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">{error}</div>
             ) : (
-              /* items-stretch: all cards in a row get the same height */
-              <div className="grid items-stretch gap-6 md:grid-cols-2">
-                {allEvents.map(ev => (
-                  <EventFlipCard key={ev._id} event={ev} image={ev.imageUrl || ev.image || '/hall.jpeg'} />
-                ))}
-              </div>
+              <>
+                {error ? (
+                  <div className="mb-6 rounded-3xl border border-amber-200 bg-amber-50 p-6 text-amber-800">
+                    <p className="font-semibold">Live drives are temporarily unavailable — showing featured drives.</p>
+                    <p className="mt-1 text-sm opacity-80">{error} · Check /api/health on your deployment for details.</p>
+                  </div>
+                ) : null}
+                {/* items-stretch: all cards in a row get the same height */}
+                <div className="grid items-stretch gap-6 md:grid-cols-2">
+                  {allEvents.map(ev => (
+                    <EventFlipCard key={ev._id} event={ev} image={ev.imageUrl || ev.image || '/hall.jpeg'} />
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </section>
