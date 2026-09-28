@@ -85,12 +85,19 @@ export async function POST(request) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
+      console.error('Chat API: GEMINI_API_KEY is not set');
+      return NextResponse.json(
+        { error: 'Chat is not configured (missing API key). Please set GEMINI_API_KEY on the server.' },
+        { status: 500 }
+      );
     }
 
+    // Sept 2026: Google limited gemini-2.5-* access to prior users only.
+    // Use override via GEMINI_MODEL env, default to widely-available gemini-2.0-flash.
+    const modelName = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: modelName,
       systemInstruction: systemPrompt,
     });
 

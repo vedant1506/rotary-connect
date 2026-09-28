@@ -243,6 +243,7 @@ export default function Chatbot() {
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
+      console.error('Chatbot sendMessage failed:', err);
       setMessages((prev) => [
         ...prev,
         {
