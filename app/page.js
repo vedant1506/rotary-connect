@@ -341,7 +341,10 @@ export default function HomePage() {
         const res = await fetch('/api/events', { headers: { 'Content-Type': 'application/json' } });
         let r;
         try { r = await res.json(); } catch { r = null; }
-        if (!res.ok) throw new Error(r?.message || 'Unable to load upcoming drives');
+        if (!res.ok) {
+          const detail = r?.error ? ` (${r.error})` : '';
+          throw new Error(`${r?.message || 'Unable to load upcoming drives'}${detail}`);
+        }
         if (alive) setEvents(Array.isArray(r?.data) ? r.data : []);
       } catch (e) {
         if (alive) setError(e instanceof Error ? e.message : 'Unable to load upcoming drives');
