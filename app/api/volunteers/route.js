@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '../../../lib/mongodb';
 import Volunteer from '../../../models/Volunteer';
+import '../../../models/Event'; // ensure Event model is registered for populate('eventId')
 
 export async function GET() {
   try {

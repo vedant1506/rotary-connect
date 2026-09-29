@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '../../../lib/mongodb';
 import Participant from '../../../models/Participant';
+import '../../../models/Event'; // ensure Event model is registered for populate('eventId')
 
 export const dynamic = 'force-dynamic';
 
