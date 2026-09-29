@@ -39,8 +39,8 @@ export default function AdminDashboardPage() {
           fetch('/api/participants', { headers: { 'Content-Type': 'application/json' } }),
         ]);
         const [volResult, partResult] = await Promise.all([volRes.json(), partRes.json()]);
-        if (!volRes.ok) throw new Error(volResult?.message || 'Unable to load volunteers');
-        if (!partRes.ok) throw new Error(partResult?.message || 'Unable to load participants');
+        if (!volRes.ok) throw new Error(volResult?.error ? `${volResult?.message} (${volResult.error})` : (volResult?.message || 'Unable to load volunteers'));
+        if (!partRes.ok) throw new Error(partResult?.error ? `${partResult?.message} (${partResult.error})` : (partResult?.message || 'Unable to load participants'));
         if (isMounted) {
           setVolunteers(Array.isArray(volResult?.data) ? volResult.data : []);
           setParticipants(Array.isArray(partResult?.data) ? partResult.data : []);

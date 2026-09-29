@@ -17,7 +17,10 @@ export default function VolunteerDetailsPage() {
       try {
         const res = await fetch('/api/volunteers');
         const result = await res.json();
-        if (!res.ok) throw new Error(result?.message || 'Failed to load');
+        if (!res.ok) {
+          const detail = result?.error ? ` (${result.error})` : '';
+          throw new Error(`${result?.message || 'Failed to load'}${detail}`);
+        }
         if (isMounted) setVolunteers(Array.isArray(result?.data) ? result.data : []);
       } catch (e) {
         if (isMounted) setError(e instanceof Error ? e.message : 'Failed to load volunteers');
